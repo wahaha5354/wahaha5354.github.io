@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wahaha5354.github.io/"/>
-  <updated>2018-08-09T00:37:39.081Z</updated>
+  <updated>2018-08-09T04:50:25.561Z</updated>
   <id>https://wahaha5354.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://wahaha5354.github.io/2018/08/09/next%E4%B8%BB%E9%A2%98%E7%9A%84%E4%B8%AA%E6%80%A7%E5%8C%96%E8%AE%BE%E7%BD%AE/"/>
     <id>https://wahaha5354.github.io/2018/08/09/next主题的个性化设置/</id>
     <published>2018-08-09T00:09:18.000Z</published>
-    <updated>2018-08-09T00:37:39.081Z</updated>
+    <updated>2018-08-09T04:50:25.561Z</updated>
     
-    <content type="html"><![CDATA[<p>因为hexo博客使用的markdown语法，之前并没有接触过markdown语法，所以第一次写博客只能参考markdown语法的用法来写</p><h2 id="设置hexo的头像"><a href="#设置hexo的头像" class="headerlink" title="设置hexo的头像"></a>设置hexo的头像</h2><p>之前参照了网上修改的方法老是出现报错，折腾了两天还是不行，后来在修改网站图标的时候才知道是因为我配置文件格式写错了，网上的很多方法都是在主题的配置文件里改，但我改了并没有生效，也许是姿势有问题，后来在站点的配置文件里修改竟然生效了，在配置文件的顶部进行修改，修改内容如下：<br><code>avatar: /uploads/avatar.jpg</code><br>我的头像图片地址存放于mysite/source/uploads,如果没有uploads目录可以自己创建，其他目录下我没试过</p>]]></content>
+    <content type="html"><![CDATA[<p>因为hexo博客使用的markdown语法，之前并没有接触过markdown语法，所以第一次写博客只能参考markdown语法的用法来写</p><h2 id="设置hexo的头像"><a href="#设置hexo的头像" class="headerlink" title="设置hexo的头像"></a>设置hexo的头像</h2><p>之前参照了网上修改的方法老是出现报错，折腾了两天还是不行，后来在修改网站图标的时候才知道是因为我配置文件格式写错了，网上的很多方法都是在主题的配置文件里改，但我改了并没有生效，也许是姿势有问题，后来在主题的配置文件里修改竟然生效了，在配置文件里搜索’Sidebar Avatar’，找到如下字段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Sidebar Avatar</span><br><span class="line">avatar:</span><br><span class="line">  # in theme directory(source/images): /images/avatar.gif</span><br><span class="line">  # in site  directory(source/uploads): /uploads/avatar.gif</span><br><span class="line">  # You can also use other linking images.</span><br><span class="line">  url: /images/avatar.jpg</span><br></pre></td></tr></table></figure></p><p>在url: 后面加上头像的存放地址，我的头像放在了站点目录/source/images/目录下，修改完配置后执行命令:<br><code>hexo clean</code><br><code>hexo g</code><br><code>hexo d</code></p><p>##站内搜索<br>刚开始想用Swiftype来着，后来才知道Swiftype在去年就停止免费服务了，又想着去用Algolia，但我实在太笨，找不到地址在哪里，网站访问的也很慢，于是准备用hexo自带的Local Search</p><ol><li>安装 hexo-generator-searchdb，在站点的根目录下执行以下命令：<br><code>npm install hexo-generator-searchdb --save</code></li><li><p>编辑 站点配置文件，新增以下内容到任意位置：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure></li><li><p>编辑 主题配置文件，启用本地搜索功能：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Local search</span><br><span class="line">local_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure></li></ol><p>具体可以参考官方的文档<a href="http://theme-next.iissnan.com/third-party-services.html#search-system" target="_blank" rel="noopener">Next使用文档</a></p>]]></content>
     
     <summary type="html">
     
