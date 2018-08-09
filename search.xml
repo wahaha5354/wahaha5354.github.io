@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Markdown语法]]></title>
+    <url>%2F2018%2F08%2F09%2FMarkdown%E8%AF%AD%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[1.标题第一种 markdown最高可以设置六级标题,前面#号的数量代表标题的等级,#号后面要带一个空格123456# 一级标题## 二级标题### 三级标题#### 四级标题##### 五级标题###### 六级标题 演示 一级标题二级标题三级标题四级标题五级标题六级标题第二种 这种只能表示一级和二级标题,=和-的数量没有限制，只要大于一就行12345一级标题=======二级标题------## 2.文本样式 加粗斜体 或者_斜体_加粗斜体删除线`演示加粗斜体 或者_斜体_加粗斜体删除线]]></content>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[next主题的个性化设置]]></title>
     <url>%2F2018%2F08%2F09%2Fnext%E4%B8%BB%E9%A2%98%E7%9A%84%E4%B8%AA%E6%80%A7%E5%8C%96%E8%AE%BE%E7%BD%AE%2F</url>
     <content type="text"><![CDATA[因为hexo博客使用的markdown语法，之前并没有接触过markdown语法，所以第一次写博客只能参考markdown语法的用法来写 设置hexo的头像之前参照了网上修改的方法老是出现报错，折腾了两天还是不行，后来在修改网站图标的时候才知道是因为我配置文件格式写错了，网上的很多方法都是在主题的配置文件里改，但我改了并没有生效，也许是姿势有问题，后来在主题的配置文件里修改竟然生效了，在配置文件里搜索’Sidebar Avatar’，找到如下字段：123456# Sidebar Avataravatar: # in theme directory(source/images): /images/avatar.gif # in site directory(source/uploads): /uploads/avatar.gif # You can also use other linking images. url: /images/avatar.jpg 在url: 后面加上头像的存放地址，我的头像放在了站点目录/source/images/目录下，修改完配置后执行命令:hexo cleanhexo ghexo d 站内搜索刚开始想用Swiftype来着，后来才知道Swiftype在去年就停止免费服务了，又想着去用Algolia，但我实在太笨，找不到地址在哪里，网站访问的也很慢，于是准备用hexo自带的Local Search 安装 hexo-generator-searchdb，在站点的根目录下执行以下命令：npm install hexo-generator-searchdb --save 编辑 站点配置文件，新增以下内容到任意位置： 12345search: path: search.xml field: post format: html limit: 10000 编辑 主题配置文件，启用本地搜索功能： 123# Local searchlocal_search: enable: true 具体可以参考官方的文档Next使用文档目前我的博客评论用的是来必力，分享用的是Add This,站内搜索用的是local search，感觉用起来还是挺不错的]]></content>
