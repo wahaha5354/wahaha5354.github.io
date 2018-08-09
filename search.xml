@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[next主题的个性化设置]]></title>
+    <url>%2F2018%2F08%2F09%2Fnext%E4%B8%BB%E9%A2%98%E7%9A%84%E4%B8%AA%E6%80%A7%E5%8C%96%E8%AE%BE%E7%BD%AE%2F</url>
+    <content type="text"><![CDATA[因为hexo博客使用的markdown语法，之前并没有接触过markdown语法，所以第一次写博客只能参考markdown语法的用法来写 设置hexo的头像之前参照了网上修改的方法老是出现报错，折腾了两天还是不行，后来在修改网站图标的时候才知道是因为我配置文件格式写错了，网上的很多方法都是在主题的配置文件里改，但我改了并没有生效，也许是姿势有问题，后来在站点的配置文件里修改竟然生效了，在配置文件的顶部进行修改，修改内容如下：avatar: /uploads/avatar.jpg我的头像图片地址存放于mysite/source/uploads,如果没有uploads目录可以自己创建，其他目录下我没试过]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo next</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2F2018%2F08%2F07%2Fhello-world%2F</url>
     <content type="text"><![CDATA[后面没有了，这是最早的一篇博客了 Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-08-07T13:10:23.094Z</updated>
+  <updated>2018-08-09T00:37:39.081Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>next主题的个性化设置</title>
+    <link href="http://yoursite.com/2018/08/09/next%E4%B8%BB%E9%A2%98%E7%9A%84%E4%B8%AA%E6%80%A7%E5%8C%96%E8%AE%BE%E7%BD%AE/"/>
+    <id>http://yoursite.com/2018/08/09/next主题的个性化设置/</id>
+    <published>2018-08-09T00:09:18.000Z</published>
+    <updated>2018-08-09T00:37:39.081Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为hexo博客使用的markdown语法，之前并没有接触过markdown语法，所以第一次写博客只能参考markdown语法的用法来写</p><h2 id="设置hexo的头像"><a href="#设置hexo的头像" class="headerlink" title="设置hexo的头像"></a>设置hexo的头像</h2><p>之前参照了网上修改的方法老是出现报错，折腾了两天还是不行，后来在修改网站图标的时候才知道是因为我配置文件格式写错了，网上的很多方法都是在主题的配置文件里改，但我改了并没有生效，也许是姿势有问题，后来在站点的配置文件里修改竟然生效了，在配置文件的顶部进行修改，修改内容如下：<br><code>avatar: /uploads/avatar.jpg</code><br>我的头像图片地址存放于mysite/source/uploads,如果没有uploads目录可以自己创建，其他目录下我没试过</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;因为hexo博客使用的markdown语法，之前并没有接触过markdown语法，所以第一次写博客只能参考markdown语法的用法来写&lt;/p&gt;
+&lt;h2 id=&quot;设置hexo的头像&quot;&gt;&lt;a href=&quot;#设置hexo的头像&quot; class=&quot;headerlink&quot; title
+      
+    
+    </summary>
+    
+      <category term="hexo" scheme="http://yoursite.com/categories/hexo/"/>
+    
+    
+      <category term="hexo next" scheme="http://yoursite.com/tags/hexo-next/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
