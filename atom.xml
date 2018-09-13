@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wahaha5354.github.io/"/>
-  <updated>2018-08-18T02:04:57.436Z</updated>
+  <updated>2018-09-13T03:11:44.601Z</updated>
   <id>https://wahaha5354.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>centos系统7的ftp版本创建目录和匿名用户登录的测试</title>
+    <link href="https://wahaha5354.github.io/2018/09/13/centos%E7%B3%BB%E7%BB%9F7%E7%9A%84ftp%E7%89%88%E6%9C%AC%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95%E5%92%8C%E5%8C%BF%E5%90%8D%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E7%9A%84%E6%B5%8B%E8%AF%95/"/>
+    <id>https://wahaha5354.github.io/2018/09/13/centos系统7的ftp版本创建目录和匿名用户登录的测试/</id>
+    <published>2018-09-13T02:21:37.000Z</published>
+    <updated>2018-09-13T03:11:44.601Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>centos6系统使用的ftp是2.0以上的版本，而centos7使用的是3.0.2版本</p></blockquote><h2 id="首先说一下ftp使用匿名用户创建目录"><a href="#首先说一下ftp使用匿名用户创建目录" class="headerlink" title="首先说一下ftp使用匿名用户创建目录"></a>首先说一下ftp使用匿名用户创建目录</h2><p>在centos7下只能在pub下创建文件夹，而且pub用户属主必须是ftp或者将pub目录授予777的权限，也就是说ftp用户在pub目录下必须具有写的权限。<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/63487703.jpg" alt="图一"><br>在这之前需要确保配置文件这几个选项为YES，这几个选项在配置文件里都是默认开启的，还有selinux要处于Permissive状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">anon_mkdir_write_enable=YES</span><br><span class="line">anon_upload_enable=YES</span><br><span class="line">anonymous_enable=YES</span><br></pre></td></tr></table></figure></p><h2 id="还有centos7下拒绝访问ftp服务的权限"><a href="#还有centos7下拒绝访问ftp服务的权限" class="headerlink" title="还有centos7下拒绝访问ftp服务的权限"></a>还有centos7下拒绝访问ftp服务的权限</h2><p>首先，ftp的访问跟ftp/pub的权限是没关系的，在正常情况下，授予ftp目录777的权限，是拒绝用户访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/64377833.jpg" alt="图二"><br>如果将ftp目录的属主和属组都修改成ftp用户，将ftp目录的权限修改回755，也是不能访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/10904134.jpg" alt="图三"><br>将配置文件的umask修改成000，并且重启服务，还是不能访问，但是如果我将ftp的目录的属主和属组都修改成ftp，而ftp的目录权限修改成557，那么ftp服务就可以正常访问了<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/98588304.jpg" alt="图四"><br>当我把ftp的属主和属组又修改成root之后，ftp服务又不能访问了<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/77312475.jpg" alt="图五"><br>我再把ftp的属主和属组都修改成ftp,,ftp服务还是可以正常的访问<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/61939290.jpg" alt="图六"><br>如果我再将ftp的目录权限修改成335，而属主和属组都是root，那么ftp也是可以访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/16375443.jpg" alt="图七"><br>保持权限不变，而属主和属组改为ftp，那么ftp服务还是不能访问<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/87405128.jpg" alt="图八"><br>我再修改ftp目录的权限为445，将ftp目录的属主和属组都改为root，ftp服务还是可以访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/93471053.jpg" alt="图九"><br>ftp目录的权限不变，修改ftp目录的属主和属组为ftp,ftp是可以进行访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/72316895.jpg" alt="图十"><br>这里属主和属组都不改变，分别修改ftp目录的权限为665和225，结果ftp服务都不能访问<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/78582627.jpg" alt="图十一"><br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/9760739.jpg" alt="图十二"><br>也就是说不能给ftp用户写的权限，否则不能访问ftp。那如果我修改一下默认目录试试呢，我将ftp默认访问路径修改成/var/test，再次进行测试发现test目录的权限也是不能有写权限，否则不能访问<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/29240569.jpg" alt="图十三"><br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/10166450.jpg" alt="图十四"><br>因此，我们可以得出结论：访问ftp服务的匿名用户不能有写权限，这也就是为什么ftp目录下匿名用户不能创建子目录的原因</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;centos6系统使用的ftp是2.0以上的版本，而centos7使用的是3.0.2版本&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;首先说一下ftp使用匿名用户创建目录&quot;&gt;&lt;a href=&quot;#首先说一下ftp使用匿名用户创建目录&quot; cla
+      
+    
+    </summary>
+    
+      <category term="ftp" scheme="https://wahaha5354.github.io/categories/ftp/"/>
+    
+    
+      <category term="ftp" scheme="https://wahaha5354.github.io/tags/ftp/"/>
+    
+  </entry>
   
   <entry>
     <title>shell编程之条件测试</title>

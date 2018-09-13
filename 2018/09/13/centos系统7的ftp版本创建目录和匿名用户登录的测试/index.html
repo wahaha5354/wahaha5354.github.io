@@ -110,16 +110,33 @@
 
 
 
-  <meta name="description" content="记录生活的点滴，Linux运维学习笔记">
-<meta property="og:type" content="website">
-<meta property="og:title" content="WangEr&#39;s Blog">
-<meta property="og:url" content="https://wahaha5354.github.io/tags/test/index.html">
+  <meta name="description" content="centos6系统使用的ftp是2.0以上的版本，而centos7使用的是3.0.2版本  首先说一下ftp使用匿名用户创建目录在centos7下只能在pub下创建文件夹，而且pub用户属主必须是ftp或者将pub目录授予777的权限，也就是说ftp用户在pub目录下必须具有写的权限。在这之前需要确保配置文件这几个选项为YES，这几个选项在配置文件里都是默认开启的，还有selinux要处于Per">
+<meta name="keywords" content="ftp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos系统7的ftp版本创建目录和匿名用户登录的测试">
+<meta property="og:url" content="https://wahaha5354.github.io/2018/09/13/centos系统7的ftp版本创建目录和匿名用户登录的测试/index.html">
 <meta property="og:site_name" content="WangEr&#39;s Blog">
-<meta property="og:description" content="记录生活的点滴，Linux运维学习笔记">
+<meta property="og:description" content="centos6系统使用的ftp是2.0以上的版本，而centos7使用的是3.0.2版本  首先说一下ftp使用匿名用户创建目录在centos7下只能在pub下创建文件夹，而且pub用户属主必须是ftp或者将pub目录授予777的权限，也就是说ftp用户在pub目录下必须具有写的权限。在这之前需要确保配置文件这几个选项为YES，这几个选项在配置文件里都是默认开启的，还有selinux要处于Per">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/63487703.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/64377833.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/10904134.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/98588304.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/77312475.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/61939290.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/16375443.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/87405128.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/93471053.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/72316895.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/78582627.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/9760739.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/29240569.jpg">
+<meta property="og:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/10166450.jpg">
+<meta property="og:updated_time" content="2018-09-13T03:11:44.601Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WangEr&#39;s Blog">
-<meta name="twitter:description" content="记录生活的点滴，Linux运维学习笔记">
+<meta name="twitter:title" content="centos系统7的ftp版本创建目录和匿名用户登录的测试">
+<meta name="twitter:description" content="centos6系统使用的ftp是2.0以上的版本，而centos7使用的是3.0.2版本  首先说一下ftp使用匿名用户创建目录在centos7下只能在pub下创建文件夹，而且pub用户属主必须是ftp或者将pub目录授予777的权限，也就是说ftp用户在pub目录下必须具有写的权限。在这之前需要确保配置文件这几个选项为YES，这几个选项在配置文件里都是默认开启的，还有selinux要处于Per">
+<meta name="twitter:image" content="http://peofbsx9u.bkt.clouddn.com/18-9-13/63487703.jpg">
 
 
 
@@ -128,7 +145,7 @@
 
 
 
-  <link rel="canonical" href="https://wahaha5354.github.io/tags/test/"/>
+  <link rel="canonical" href="https://wahaha5354.github.io/2018/09/13/centos系统7的ftp版本创建目录和匿名用户登录的测试/"/>
 
 
 
@@ -138,7 +155,7 @@
   };
 </script>
 
-  <title>标签: test | WangEr's Blog</title>
+  <title>centos系统7的ftp版本创建目录和匿名用户登录的测试 | WangEr's Blog</title>
   
 
 
@@ -185,7 +202,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://your-url" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><
@@ -242,7 +259,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
   </li>
@@ -330,87 +347,248 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>test<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wahaha5354.github.io/2018/09/13/centos系统7的ftp版本创建目录和匿名用户登录的测试/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wanger">
+      <meta itemprop="description" content="记录生活的点滴，Linux运维学习笔记">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WangEr's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/08/05/test/" itemprop="url">
-              
-                <span itemprop="name">test</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">centos系统7的ftp版本创建目录和匿名用户登录的测试
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-05T20:34:51+08:00"
-              content="2018-08-05" >
-          08-05
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-13 10:21:37 / 修改时间：11:11:44" itemprop="dateCreated datePublished" datetime="2018-09-13T10:21:37+08:00">2018-09-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ftp/" itemprop="url" rel="index"><span itemprop="name">ftp</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>centos6系统使用的ftp是2.0以上的版本，而centos7使用的是3.0.2版本</p>
+</blockquote>
+<h2 id="首先说一下ftp使用匿名用户创建目录"><a href="#首先说一下ftp使用匿名用户创建目录" class="headerlink" title="首先说一下ftp使用匿名用户创建目录"></a>首先说一下ftp使用匿名用户创建目录</h2><p>在centos7下只能在pub下创建文件夹，而且pub用户属主必须是ftp或者将pub目录授予777的权限，也就是说ftp用户在pub目录下必须具有写的权限。<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/63487703.jpg" alt="图一"><br>在这之前需要确保配置文件这几个选项为YES，这几个选项在配置文件里都是默认开启的，还有selinux要处于Permissive状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">anon_mkdir_write_enable=YES</span><br><span class="line">anon_upload_enable=YES</span><br><span class="line">anonymous_enable=YES</span><br></pre></td></tr></table></figure></p>
+<h2 id="还有centos7下拒绝访问ftp服务的权限"><a href="#还有centos7下拒绝访问ftp服务的权限" class="headerlink" title="还有centos7下拒绝访问ftp服务的权限"></a>还有centos7下拒绝访问ftp服务的权限</h2><p>首先，ftp的访问跟ftp/pub的权限是没关系的，在正常情况下，授予ftp目录777的权限，是拒绝用户访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/64377833.jpg" alt="图二"><br>如果将ftp目录的属主和属组都修改成ftp用户，将ftp目录的权限修改回755，也是不能访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/10904134.jpg" alt="图三"><br>将配置文件的umask修改成000，并且重启服务，还是不能访问，但是如果我将ftp的目录的属主和属组都修改成ftp，而ftp的目录权限修改成557，那么ftp服务就可以正常访问了<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/98588304.jpg" alt="图四"><br>当我把ftp的属主和属组又修改成root之后，ftp服务又不能访问了<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/77312475.jpg" alt="图五"><br>我再把ftp的属主和属组都修改成ftp,,ftp服务还是可以正常的访问<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/61939290.jpg" alt="图六"><br>如果我再将ftp的目录权限修改成335，而属主和属组都是root，那么ftp也是可以访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/16375443.jpg" alt="图七"><br>保持权限不变，而属主和属组改为ftp，那么ftp服务还是不能访问<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/87405128.jpg" alt="图八"><br>我再修改ftp目录的权限为445，将ftp目录的属主和属组都改为root，ftp服务还是可以访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/93471053.jpg" alt="图九"><br>ftp目录的权限不变，修改ftp目录的属主和属组为ftp,ftp是可以进行访问的<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/72316895.jpg" alt="图十"><br>这里属主和属组都不改变，分别修改ftp目录的权限为665和225，结果ftp服务都不能访问<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/78582627.jpg" alt="图十一"><br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/9760739.jpg" alt="图十二"><br>也就是说不能给ftp用户写的权限，否则不能访问ftp。那如果我修改一下默认目录试试呢，我将ftp默认访问路径修改成/var/test，再次进行测试发现test目录的权限也是不能有写权限，否则不能访问<br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/29240569.jpg" alt="图十三"><br><img src="http://peofbsx9u.bkt.clouddn.com/18-9-13/10166450.jpg" alt="图十四"><br>因此，我们可以得出结论：访问ftp服务的匿名用户不能有写权限，这也就是为什么ftp目录下匿名用户不能创建子目录的原因</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+        
+      </div>
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="wanger wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="wanger 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="wanger 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ftp/" rel="tag"># ftp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/18/shell编程之条件测试/" rel="next" title="shell编程之条件测试">
+                <i class="fa fa-chevron-left"></i> shell编程之条件测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODcxMi8xNTI0MA=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -431,8 +609,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -546,6 +733,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#首先说一下ftp使用匿名用户创建目录"><span class="nav-number">1.</span> <span class="nav-text">首先说一下ftp使用匿名用户创建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还有centos7下拒绝访问ftp服务的权限"><span class="nav-number">2.</span> <span class="nav-text">还有centos7下拒绝访问ftp服务的权限</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -727,6 +930,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -739,6 +946,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
