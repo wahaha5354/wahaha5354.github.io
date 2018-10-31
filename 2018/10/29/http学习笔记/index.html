@@ -118,7 +118,7 @@
 <meta property="og:site_name" content="WangEr&#39;s Blog">
 <meta property="og:description" content="http:hypertext transfer protocol：超文本传输协议超文本：带有超级链接的链接超级链接：能够实现在不同的文档中跳转http/0.9版本：只支持纯文本的传输（带有超级连接）ASCII码&amp;emsp;&amp;emsp;HTML:hypertext mark&amp;emsp;&amp;emsp;language:超文本标记语言&amp;emsp;&amp;emsp;支持get方法，且不支持请求头 Browser:">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-29T14:08:42.397Z">
+<meta property="og:updated_time" content="2018-10-31T15:28:28.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http学习笔记">
 <meta name="twitter:description" content="http:hypertext transfer protocol：超文本传输协议超文本：带有超级链接的链接超级链接：能够实现在不同的文档中跳转http/0.9版本：只支持纯文本的传输（带有超级连接）ASCII码&amp;emsp;&amp;emsp;HTML:hypertext mark&amp;emsp;&amp;emsp;language:超文本标记语言&amp;emsp;&amp;emsp;支持get方法，且不支持请求头 Browser:">
@@ -394,12 +394,24 @@
                 
               
 
-              <time title="创建时间：2018-10-29 22:07:04 / 修改时间：22:08:42" itemprop="dateCreated datePublished" datetime="2018-10-29T22:07:04+08:00">2018-10-29</time>
+              <time title="创建时间：2018-10-29 22:07:04" itemprop="dateCreated datePublished" datetime="2018-10-29T22:07:04+08:00">2018-10-29</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-31 23:28:28" itemprop="dateModified" datetime="2018-10-31T23:28:28+08:00">2018-10-31</time>
               
             
           </span>
@@ -444,7 +456,7 @@
 </code></pre><p>http报文：请求报文（http request）和响应报文（http response）  </p>
 <p>&emsp;&emsp;请求报文语法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">method</span>&gt;</span><span class="tag">&lt;<span class="name">request-URI</span>&gt;</span><span class="tag">&lt;<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">headers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">entity-body</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;响应报文语法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span><span class="tag">&lt;<span class="name">status</span>&gt;</span><span class="tag">&lt;<span class="name">reason-phrase</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">headrers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">entity-body</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="响应报文的状态代码："><a href="#响应报文的状态代码：" class="headerlink" title="响应报文的状态代码："></a>响应报文的状态代码：</h4><p>&emsp;&emsp;1xx：纯信息，已经弃用<br>&emsp;&emsp;2xx：“成功“类的信息<br>&emsp;&emsp;3xx：重定向类的信息<br>&emsp;&emsp;4xx：客户端错误类信息<br>&emsp;&emsp;5xx：服务器端错误类的信息  </p>
+<h4 id="响应报文的状态代码："><a href="#响应报文的状态代码：" class="headerlink" title="响应报文的状态代码："></a>响应报文的状态代码：</h4><p>&emsp;&emsp;1xx：纯信息，已经弃用<br>&emsp;&emsp;200：“成功“类的信息<br>&emsp;&emsp;301：永久重定向<br>&emsp;&emsp;302：临时重定向<br>&emsp;&emsp;304：浏览器缓存<br>&emsp;&emsp;403：请求不到首页，权限被拒绝<br>&emsp;&emsp;404：资源找不到<br>&emsp;&emsp;500：服务器内部错误，程序代码错误<br>&emsp;&emsp;502：找不到后端的错误<br>&emsp;&emsp;504：请求超时</p>
 <h4 id="Web服务器处理并发连接请求的并发模型"><a href="#Web服务器处理并发连接请求的并发模型" class="headerlink" title="Web服务器处理并发连接请求的并发模型"></a>Web服务器处理并发连接请求的并发模型</h4><p>&emsp;&emsp;1.单线程web服多器(Single-threaded web servers):此种架构方式中,web服多器一次处理一个请求.结束后读取井处理下一个请求.在某请求处理辻程中,其它所有的清求将被阻塞,因此;在并发请求较多的场景中将会出现严重的性能问题（即一次只能处理一个请求）</p>
 <p>&emsp;&emsp;2.多进程/多线程web服灸器:此种架构方式中, web服多器生成多个进程或线程并行处理多个用戸请求,进程或线程可以按需或事先生成、有的web服务器应用程序为每个用戸请求生成一个単独的进程或线程来进行响应,不过, 一旦并发请求数量达到成千上万吋,多个同吋进行的进程或线程将会消耗大量的系統资源（即每个进程只能响应一个请求，并且一个进程对应一个线程）</p>
 <p>&emsp;&emsp;3.I/O多路复用web服努器:为了能够支持更多的并友用户清求,越来越多的web服努器正在采用多种复用的架构–即同歩监控所有的连接靖求的活动状态，当一个连接的状态发生改变时(如数据准各完毕或发生某错误)将为其执行一系列特定操作；在操作完成后此连接将重新变回暂时的稳定态并返回至打开的连接列表中，直到下次的状态改变，由于其多路复用的特性,进程或线程不会被空闲的连接所占用，因而可以提供高效的工作模弌.（<br>这种架构可以理解为一个进程可以生成多个线程，每个请求交给一个线程程迸行处理)  </p>
