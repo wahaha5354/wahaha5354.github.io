@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.gif?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.ico?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.ico?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+  <link rel="manifest" href="/images/favicon.gif">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="安装zabbix-server添加zabbix存储库123rpm -ivh https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpmyum -y install yum-utilsyum-config-manager --enable rhel-7-server-optional-rpm">
+<meta name="keywords" content="zabbix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用LNMP搭建zabbix并对接elasticsearch">
+<meta property="og:url" content="https://wahaha5354.github.io/2018/12/22/使用LNMP搭建zabbix并对接elastic/index.html">
+<meta property="og:site_name" content="WangEr&#39;s Blog">
+<meta property="og:description" content="安装zabbix-server添加zabbix存储库123rpm -ivh https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpmyum -y install yum-utilsyum-config-manager --enable rhel-7-server-optional-rpm">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/c22be03880286ecb2b5f0fca2241a988.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/6a453336a86a21df49bb85fab7c44465.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/71827edbecc7603594797229c93f708e.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/131e24ea6ab369a41548385e7dfca88d.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/75c7b18db89872244730618ec8b6ae2b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/ef87718cf7eb2ce4d66316833261e58b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/7b721127f982e1c282281addd30daaee.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/7d1a9ec810d43fd3ac3b96035e614462.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/3afd023482262bb9e0d5efb104c419e9.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/b0b7be9592f230d84b4af20d3d836c7a.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/422898faaa5e65124708ec372a778a1a.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/0cb47b32e68157b2d31986d9b3fb6b03.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/b907c205e6f11ddab034b94205e82d99.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/362c7670800766f29834777ea1fdf065.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/932e09e8b21bbf94e7c00e2aa1beb43a.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/81e28a872b25a4a0145869b6b837346f.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/f8409627b383f3bfd8c0ebc759e07e9f.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/7e12d7a1ded4d024ef1a111001b2be1c.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/22/f9f2abb28c4bd2b1fa464e802bf7b7ab.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:updated_time" content="2018-12-22T10:32:00.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用LNMP搭建zabbix并对接elasticsearch">
+<meta name="twitter:description" content="安装zabbix-server添加zabbix存储库123rpm -ivh https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpmyum -y install yum-utilsyum-config-manager --enable rhel-7-server-optional-rpm">
+<meta name="twitter:image" content="http://i2.51cto.com/images/blog/201812/22/c22be03880286ecb2b5f0fca2241a988.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="WangEr's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://wahaha5354.github.io/2018/12/22/使用LNMP搭建zabbix并对接elastic/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>使用LNMP搭建zabbix并对接elasticsearch | WangEr's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://your-url" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WangEr's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">生活不止眼前的苟且，还有远方的西洋参和鹿茸</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />公益 404</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wahaha5354.github.io/2018/12/22/使用LNMP搭建zabbix并对接elastic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wanger">
+      <meta itemprop="description" content="记录生活的点滴，Linux运维学习笔记">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WangEr's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用LNMP搭建zabbix并对接elasticsearch
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-22 18:30:04 / 修改时间：18:32:00" itemprop="dateCreated datePublished" datetime="2018-12-22T18:30:04+08:00">2018-12-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="安装zabbix-server"><a href="#安装zabbix-server" class="headerlink" title="安装zabbix-server"></a>安装zabbix-server</h3><h4 id="添加zabbix存储库"><a href="#添加zabbix存储库" class="headerlink" title="添加zabbix存储库"></a>添加zabbix存储库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm</span><br><span class="line">yum -y install yum-utils</span><br><span class="line">yum-config-manager --enable rhel-7-server-optional-rpm</span><br></pre></td></tr></table></figure>
+<h4 id="安装zabbix-server-zabbix-web"><a href="#安装zabbix-server-zabbix-web" class="headerlink" title="安装zabbix-server  zabbix-web"></a>安装zabbix-server  zabbix-web</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install zabbix-server-mysql</span><br><span class="line">yum install zabbix-web-mysql</span><br></pre></td></tr></table></figure>
+<h3 id="安装MySQL5-7数据库"><a href="#安装MySQL5-7数据库" class="headerlink" title="安装MySQL5.7数据库"></a>安装MySQL5.7数据库</h3><h4 id="卸载mariadb包"><a href="#卸载mariadb包" class="headerlink" title="卸载mariadb包"></a>卸载mariadb包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa |grep mariadb    #查看当前安装的mariadb的包</span><br><span class="line">rpm -e --nodeps mariadb-libs-5.5.52-1.el7.x86_64     #卸载mariadb的包</span><br></pre></td></tr></table></figure>
+<h4 id="下载并解压MySQL源码包"><a href="#下载并解压MySQL源码包" class="headerlink" title="下载并解压MySQL源码包"></a>下载并解压MySQL源码包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://dev.mysql.com/get/archives/mysql-5.7/mysql-5.7.21-linux-glibc2.12-x86_64.tar.gz  #从官网下载源码包</span><br><span class="line">tar -xzvf  mysql-5.7.21-linux-glibc2.12-x86_64.tar.gz     #解压源码包</span><br><span class="line">mv  mysql-5.7.21-linux-glibc2.12-x86_64  /usr/local/mysql</span><br></pre></td></tr></table></figure>
+<h4 id="创建MySQL用户并对MySQL文件进行授权"><a href="#创建MySQL用户并对MySQL文件进行授权" class="headerlink" title="创建MySQL用户并对MySQL文件进行授权"></a>创建MySQL用户并对MySQL文件进行授权</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groupadd mysql   --创建mysql用户组</span><br><span class="line">useradd -r -g mysql mysql     --创建mysql用户并添加到mysql用户组中</span><br><span class="line">chown -R mysql.mysql mysql/  --将mysql目录访问权限赋为myql用户</span><br></pre></td></tr></table></figure>
+<h4 id="创建MySQL配置文件"><a href="#创建MySQL配置文件" class="headerlink" title="创建MySQL配置文件"></a>创建MySQL配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt;/etc/my.cnf  &lt;&lt;EOF   #写入配置文件</span><br><span class="line">[client]</span><br><span class="line">port = 3306</span><br><span class="line">socket = /tmp/mysql.sock</span><br><span class="line">[mysqld]</span><br><span class="line">character_set_server=utf8</span><br><span class="line">init_connect=&apos;SET NAMES utf8&apos;</span><br><span class="line">basedir=/usr/local/mysql</span><br><span class="line">datadir=/usr/local/mysql/data</span><br><span class="line">socket=/tmp/mysql.sock</span><br><span class="line">log-error=/var/log/mysqld.log</span><br><span class="line">pid-file=/var/run/mysqld/mysqld.pid</span><br><span class="line">#不区分大小写</span><br><span class="line">lower_case_table_names = 1</span><br><span class="line">sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br><span class="line">max_connections=5000</span><br><span class="line">default-time_zone = &apos;+8:00‘</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h4 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">touch /var/log/mysqld.log    #创建日志文件并授权</span><br><span class="line">chmod 777 /var/log/mysqld.log</span><br><span class="line">chown mysql.mysql mysqld.log</span><br><span class="line">/usr/local/mysql/bin/mysqld   --initialize --user=mysql   --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data</span><br></pre></td></tr></table></figure>
+<h4 id="查看初始化密码"><a href="#查看初始化密码" class="headerlink" title="查看初始化密码"></a>查看初始化密码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysqld.log|grep root@localhost</span><br></pre></td></tr></table></figure>
+<h4 id="执行如下操作开启MySQL服务，并设置相应权限"><a href="#执行如下操作开启MySQL服务，并设置相应权限" class="headerlink" title="执行如下操作开启MySQL服务，并设置相应权限"></a>执行如下操作开启MySQL服务，并设置相应权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/run/mysqld</span><br><span class="line">touch /var/run/mysqld/mysqld.pid</span><br><span class="line">chmod -R 777 /var/run/mysqld</span><br><span class="line">chown -R mysql.mysql /var/run/mysqld</span><br><span class="line">/usr/local/mysql/support-files/mysql.server start  #启动MySQL</span><br></pre></td></tr></table></figure>
+<h4 id="修改MySQL密码"><a href="#修改MySQL密码" class="headerlink" title="修改MySQL密码"></a>修改MySQL密码</h4><p>vim /etc/my.cnf   #修改配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">skip-grant-tables    #跳过密码认证</span><br><span class="line">default_password_lifetime=360    #修改密码超时时间</span><br><span class="line">不然修改密码之后密码会过期，会提示让你重新设置密码</span><br><span class="line">You must reset your password using ALTER USER statement before executing this statement.</span><br><span class="line">/usr/local/mysql/bin/mysql -uroot -p        #登录MySQL</span><br><span class="line">use mysql    #切换MySql数据库</span><br><span class="line">update mysql.user set authentication_string =password(&apos;root&apos;), host = &apos;%&apos; where user = &apos;root&apos;;   #修改MySQL密码</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure></p>
+<h4 id="将MySQL加入环境变量"><a href="#将MySQL加入环境变量" class="headerlink" title="将MySQL加入环境变量"></a>将MySQL加入环境变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;PATH=/usr/local/mysql/bin:$PATH&apos; &gt;&gt;/etc/profile      #将MySQL二进制文件加入环境变量</span><br><span class="line">ln -s usr/local/mysql/support-files/mysql.server /usr/local/mysql/bin/    将MySQL的启动文件软连接到MySQL的环境变量中</span><br></pre></td></tr></table></figure>
+<h4 id="进入数据库并创建zabbix数据库以及创建授权用户"><a href="#进入数据库并创建zabbix数据库以及创建授权用户" class="headerlink" title="进入数据库并创建zabbix数据库以及创建授权用户"></a>进入数据库并创建zabbix数据库以及创建授权用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  create database zabbix character set utf8 collate utf8_bin;</span><br><span class="line">mysql&gt; grant all privileges on zabbix.* to zabbix@localhost identified by &apos;zabbix&apos;；</span><br><span class="line">mysql&gt; flush privileges;</span><br></pre></td></tr></table></figure>
+<h4 id="编辑zabbix-server配置文件"><a href="#编辑zabbix-server配置文件" class="headerlink" title="编辑zabbix-server配置文件"></a>编辑zabbix-server配置文件</h4><p>修改以下参数为创建数据库时的信息，并重启zabbix-server<br>vim /etc/zabbix/zabbix_server.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DBName=zabbix</span><br><span class="line">DBHost=192.168.179.132</span><br><span class="line">DBUser=zabbix</span><br><span class="line">DBPassword=zabbix</span><br><span class="line">systemctl enable zabbix-server</span><br><span class="line">systemctl start zabbix-server</span><br></pre></td></tr></table></figure></p>
+<p>启动的时候启动失败，查看系统日志，查找关键词<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usr/sbin/zabbix_server: error while loading shared libraries: libmysqlclient.so.18: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure></p>
+<p>原来是缺少一个文件，yum安装解决<br><code>yum -y install mysql-libs</code></p>
+<h4 id="将初始数据导入MySQL中"><a href="#将初始数据导入MySQL中" class="headerlink" title="将初始数据导入MySQL中"></a>将初始数据导入MySQL中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix</span><br></pre></td></tr></table></figure>
+<h3 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h3><h4 id="关掉防火墙和selinux"><a href="#关掉防火墙和selinux" class="headerlink" title="关掉防火墙和selinux"></a>关掉防火墙和selinux</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line">sed -i &apos;s/SELINUX=enforcing/SELINUX=disable/g&apos; /etc/selinux/config</span><br></pre></td></tr></table></figure>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install wget vim lsof lrzsz pcre-devel zlib-devel make gd-devel libjpeg-devel libpng-devel libxml2-devel bzip2-devel libcurl-devel libmcrypt libmcrypt-devel mcrypt mhash net-snmp-devel</span><br><span class="line">yum -y install gcc bison bison-devel openssl-devel readline-devel libedit-devel sqlite-devel freetype freetype-devel libevent-devel mysql-devel</span><br></pre></td></tr></table></figure>
+<h4 id="配置Nginx的yum仓库"><a href="#配置Nginx的yum仓库" class="headerlink" title="配置Nginx的yum仓库"></a>配置Nginx的yum仓库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt;/etc/yum.repos.d/nginx.repo &lt;&lt;EOF</span><br><span class="line">[nginx]</span><br><span class="line">name=nginx.repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/7/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line">skip_if_unavailable = 1</span><br><span class="line">keepcache = 0</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h4 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nginx -t  测试配置是否有错</span><br><span class="line">systemctl start nginx</span><br><span class="line">systemctl enable nginx</span><br></pre></td></tr></table></figure>
+<h3 id="安装PHP"><a href="#安装PHP" class="headerlink" title="安装PHP"></a>安装PHP</h3><h4 id="添加PHP用户"><a href="#添加PHP用户" class="headerlink" title="添加PHP用户"></a>添加PHP用户</h4><p><code>useradd -s /sbin/nologin php-fpm</code></p>
+<h4 id="安装PHP依赖库"><a href="#安装PHP依赖库" class="headerlink" title="安装PHP依赖库"></a>安装PHP依赖库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y gcc gcc-c++ make zlib zlib-devel pcre pcre-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers</span><br></pre></td></tr></table></figure>
+<h4 id="编译安装php"><a href="#编译安装php" class="headerlink" title="编译安装php"></a>编译安装php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget http://mirrors.sohu.com/php/php-7.2.6.tar.gz</span><br><span class="line">tar zxvf php-7.2.6.tar.gz</span><br><span class="line">cd php-7.2.6</span><br><span class="line">./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-fpm --with-fpm-user=php-fpm --with-fpm-group=php-fpm --with-mysql=mysqlnd  --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-libxml-dir --with-gd --with-jpeg-dir --with-png-dir --with-freetype-dir --with-iconv-dir --with-zlib-dir --with-mcrypt --enable-soap --enable-gd-native-ttf --enable-ftp --enable-mbstring --enable-exif --disable-ipv6 --with-pear --with-curl --enable-bcmath --enable-mbstring --enable-sockets --with-gd --with-libxml-dir=/usr/local --with-gettext</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">echo $? #每执行完上条命令就运行一下，如果返回0，则执行成功</span><br><span class="line">cp php.ini-production /usr/local/php/etc/php.ini</span><br></pre></td></tr></table></figure>
+<h4 id="更改PHP配置文件"><a href="#更改PHP配置文件" class="headerlink" title="更改PHP配置文件"></a>更改PHP配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sed -i &apos;s/post_max_size = 8M/post_max_size = 32M/g&apos; /usr/local/php/etc/php.ini</span><br><span class="line">sed -i &apos;s/upload_max_filesize = 2M/upload_max_filesize = 50M/g&apos; /usr/local/php/etc/php.ini</span><br><span class="line">sed -i &apos;s/;date.timezone =/date.timezone =PRC/&apos; /usr/local/php/etc/php.ini</span><br><span class="line">sed -i &apos;s/max_execution_time = 30/max_execution_time = 600/g&apos; /usr/local/php/etc/php.ini</span><br><span class="line">sed -i &apos;s/max_input_time = 60/max_input_time = 600/g&apos; /usr/local/php/etc/php.ini</span><br><span class="line">sed -i &apos;s/memory_limit = 128M/memory_limit = 256M/g&apos; /usr/local/php/etc/php.ini</span><br></pre></td></tr></table></figure>
+<h4 id="启动php-fpm"><a href="#启动php-fpm" class="headerlink" title="启动php-fpm"></a>启动php-fpm</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf</span><br><span class="line">cp /usr/local/php/etc/php-fpm.d/www.conf.default  /usr/local/php/etc/php-fpm.d/www.conf</span><br><span class="line">/usr/local/php/sbin/php-fpm -c /usr/local/php/etc/php.ini -y /usr/local/php/etc/php-fpm.conf</span><br></pre></td></tr></table></figure>
+<p>vim phpinfo.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">phpinfo();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>测试是否能连接nginx，这里出现一个错误，访问动态页面一直显示文件没有发现，修改nginx配置文件的PHP脚本路径变量和修改文件权限后一直没有用，后来我将路径的变量去掉，添加网站真实路径后解决</p>
+<p><img src="http://i2.51cto.com/images/blog/201812/22/c22be03880286ecb2b5f0fca2241a988.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h3 id="安装zabbix-agent"><a href="#安装zabbix-agent" class="headerlink" title="安装zabbix-agent"></a>安装zabbix-agent</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install zabbix-agent</span><br><span class="line">vim /etc/zabbix/zabbix-agentd.conf     #Server和ServerActive分别代表zabbix的被动模式和主动模式，这里都填server端的IP</span><br><span class="line">最后一行是开启脚本采集数据</span><br></pre></td></tr></table></figure>
+<p><img src="http://i2.51cto.com/images/blog/201812/22/6a453336a86a21df49bb85fab7c44465.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h3 id="安装zabbix-web"><a href="#安装zabbix-web" class="headerlink" title="安装zabbix-web"></a>安装zabbix-web</h3><h4 id="将zabbix的php源文件拷贝到网站目录上"><a href="#将zabbix的php源文件拷贝到网站目录上" class="headerlink" title="将zabbix的php源文件拷贝到网站目录上"></a>将zabbix的php源文件拷贝到网站目录上</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -r /usr/share/zabbix/.* /usr/share/nginx/html/</span><br></pre></td></tr></table></figure>
+<h4 id="修改nginx配置"><a href="#修改nginx配置" class="headerlink" title="修改nginx配置"></a>修改nginx配置</h4><p>egrep -v ‘(^.*#|^$)’ /etc/nginx/conf.d/default.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  192.168.179.132;</span><br><span class="line">    access_log  /var/log/nginx/host.access.log  main;</span><br><span class="line">    location / &#123;</span><br><span class="line">       root   /usr/share/nginx/html;</span><br><span class="line">       index  index.html index.htm index.php;</span><br><span class="line">    &#125;</span><br><span class="line">    error_page  404              /404.html;</span><br><span class="line">    location ~ \.php$ &#123;</span><br><span class="line">        root           html;</span><br><span class="line">        fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">        fastcgi_index  index.php;</span><br><span class="line">        fastcgi_param  SCRIPT_FILENAME  /usr/share/nginx/html$fastcgi_script_name;</span><br><span class="line">        include        fastcgi_params;</span><br><span class="line">	</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>重启nginx访问会报这个错<br><img src="http://i2.51cto.com/images/blog/201812/22/71827edbecc7603594797229c93f708e.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br>百度之后得知是权限不足引起的，运行一下命令可以解决，这里一定要777，不然到时候安装完成不能创建配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 777 /etc/zabbix/web</span><br></pre></td></tr></table></figure></p>
+<p>在访问浏览器的时候不出图，请教我学长之后得出是因为nginx上配置了图片缓存，去掉缓存解决</p>
+<h4 id="访问192-168-179-132-index-php安装zabbix-web"><a href="#访问192-168-179-132-index-php安装zabbix-web" class="headerlink" title="访问192.168.179.132/index.php安装zabbix-web"></a>访问192.168.179.132/index.php安装zabbix-web</h4><p><img src="http://i2.51cto.com/images/blog/201812/22/131e24ea6ab369a41548385e7dfca88d.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br><img src="http://i2.51cto.com/images/blog/201812/22/75c7b18db89872244730618ec8b6ae2b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br>安装完成可能会遇到连接不上zabbix-server的错误，查看zabbix-server日志如下，这个解决方法有两种，第一种就是创建一个mysql.sock然后重启mysql服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/lib/mysql</span><br><span class="line">ln -s /tmp/mysql.sock /var/lib/mysql/mysql.sock</span><br></pre></td></tr></table></figure></p>
+<p>第二种就是编辑zabbix_server.conf文件，将DBSocket修改为自己数据库的mysql.sock,然后重启 zabbix_server<br><img src="http://i2.51cto.com/images/blog/201812/22/ef87718cf7eb2ce4d66316833261e58b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h3 id="监控zabbix-本机的CPU-idle"><a href="#监控zabbix-本机的CPU-idle" class="headerlink" title="监控zabbix 本机的CPU idle"></a>监控zabbix 本机的CPU idle</h3><p>监控CPU idle<br>基本就是图形界面，创建监控项之前先测试一下key值是否可用，当然需要安装zabbix_get工具，使用yum install zabbix-get来安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zabbix_get -s 192.168.179.132 -k system.cpu.util[all,idle,avg1]</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://i2.51cto.com/images/blog/201812/22/7b721127f982e1c282281addd30daaee.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h3 id="自建模板监控磁盘IO"><a href="#自建模板监控磁盘IO" class="headerlink" title="自建模板监控磁盘IO"></a>自建模板监控磁盘IO</h3><p>监控磁盘IO利用的工具是iostat<br>yum install -y sysstat</p>
+<h4 id="首先zabbix-agent端要开启允许脚本收集监控数据"><a href="#首先zabbix-agent端要开启允许脚本收集监控数据" class="headerlink" title="首先zabbix-agent端要开启允许脚本收集监控数据"></a>首先zabbix-agent端要开启允许脚本收集监控数据</h4><p>编辑zabbix-agent的配置文件<br>vim /etc/zabbix/zabbix_agentd.d/userparameter.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UserParameter=disk.status[*],/usr/local/zabbix/scripts/disk-status.sh $1</span><br></pre></td></tr></table></figure></p>
+<h4 id="编写收集脚本"><a href="#编写收集脚本" class="headerlink" title="编写收集脚本"></a>编写收集脚本</h4><p>vim /usr/local/zabbix/scripts/disk-status.sh<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash </span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -ne 1 ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Follow the script name with an argument"</span> </span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line"></span><br><span class="line">        rrqm)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $2&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        wrqm)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $3&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        rps)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda|awk <span class="string">'&#123;print $4&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        wps)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $5&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        rKBps)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $6&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        wKBps)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $7&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        avgrq-sz)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $8&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        avgqu-sz)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $9&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        await)</span><br><span class="line">     		iostat -dxk 1 1|grep -w sda|awk <span class="string">'&#123;print $10&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        svctm)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $13&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        util)</span><br><span class="line">                iostat -dxk 1 1|grep -w sda |awk <span class="string">'&#123;print $14&#125;'</span></span><br><span class="line">                ;;</span><br><span class="line">        *)</span><br><span class="line">                <span class="built_in">echo</span> -e <span class="string">"\e[033mUsage: sh <span class="variable">$0</span> [rrqm|wrqm|rps|wps|rKBps|wKBps|avgqu-sz|avgrq-sz|await|svctm|util]\e[0m"</span></span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure></p>
+<p>touch +x /usr/local/zabbix/scripts/disk-status.sh   #给脚本添加执行权限</p>
+<h4 id="打开zabbix-web，创建模板"><a href="#打开zabbix-web，创建模板" class="headerlink" title="打开zabbix-web，创建模板"></a>打开zabbix-web，创建模板</h4><p>浏览器打开192.168.179.132/index.php<br>依次点击配置——&gt;模板——&gt;创建模板<br>添加模板名称以及群组，最后点击添加<br><img src="http://i2.51cto.com/images/blog/201812/22/7d1a9ec810d43fd3ac3b96035e614462.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="创建应用集"><a href="#创建应用集" class="headerlink" title="创建应用集"></a>创建应用集</h4><p>在创建的模板上点击创建应用集，名字最好与磁盘io相关<br><img src="http://i2.51cto.com/images/blog/201812/22/3afd023482262bb9e0d5efb104c419e9.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="创建监控项"><a href="#创建监控项" class="headerlink" title="创建监控项"></a>创建监控项</h4><p>这里所有的数据类型都是浮点数<br><img src="http://i2.51cto.com/images/blog/201812/22/b0b7be9592f230d84b4af20d3d836c7a.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br><img src="http://i2.51cto.com/images/blog/201812/22/422898faaa5e65124708ec372a778a1a.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="创建图形"><a href="#创建图形" class="headerlink" title="创建图形"></a>创建图形</h4><p>这需要为每一个监控项都创建图形<br><img src="http://i2.51cto.com/images/blog/201812/22/0cb47b32e68157b2d31986d9b3fb6b03.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="为需要监控的主机链接模板"><a href="#为需要监控的主机链接模板" class="headerlink" title="为需要监控的主机链接模板"></a>为需要监控的主机链接模板</h4><p>点击需要监控的主机，然后单击模板，为主机添加模板链接<br><img src="http://i2.51cto.com/images/blog/201812/22/b907c205e6f11ddab034b94205e82d99.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br><img src="http://i2.51cto.com/images/blog/201812/22/362c7670800766f29834777ea1fdf065.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="解决图形名字乱码问题"><a href="#解决图形名字乱码问题" class="headerlink" title="解决图形名字乱码问题"></a>解决图形名字乱码问题</h4><p>可以看到我收集到的图形是乱码的<br>首先查看zabbix字体目录，它定义的路径是“fonts”，它是一个相对路径，绝对路径为/usr/share/zabbix/fonts，<br>vim /usr/share/zabbix/include/defines.inc.php //搜索ZBX_FONTPATH<br><img src="http://i2.51cto.com/images/blog/201812/22/932e09e8b21bbf94e7c00e2aa1beb43a.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br>而字体文件为“ZBX_GRAPH_FONT_NAME”所定义的“graphfont”，它是一个文件，绝对路径为/usr/share/zabbix/fonts/graphfont.ttf<br>我们可以从Windows系统中选择一个中文字体然后放到zabbix的字体目录下<br>Windows字体目录位于C:\Windows\Fonts下，找到仿宋常规字体将他拷入zabbix字体目录下<br>然后修改PHP文件，将字体文件修改为simsong<br><img src="http://i2.51cto.com/images/blog/201812/22/81e28a872b25a4a0145869b6b837346f.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h3 id="安装elastic6-1"><a href="#安装elastic6-1" class="headerlink" title="安装elastic6.1"></a>安装elastic6.1</h3><h4 id="下载源码包并解压，修改es配置"><a href="#下载源码包并解压，修改es配置" class="headerlink" title="下载源码包并解压，修改es配置"></a>下载源码包并解压，修改es配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install java    #elastic需要安装Java依赖</span><br><span class="line">curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.4.tar.gz</span><br><span class="line">tar -xvf elasticsearch-6.1.4.tar.gz</span><br></pre></td></tr></table></figure>
+<p>vim /root/elasticsearch-6.1.4/config/elasticsearch.yml   #主要修改es的一些配置信息<br><img src="http://i2.51cto.com/images/blog/201812/22/f8409627b383f3bfd8c0ebc759e07e9f.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br>启动过程出现的报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[WARN ][o.e.b.BootstrapChecks    ] [PWm-Blt] max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]</span><br></pre></td></tr></table></figure></p>
+<p>解决办法：<br>vim /etc/security/limits.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 131072</span><br><span class="line">* soft nproc 2048</span><br><span class="line">* hard nproc 4096</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[WARN ][o.e.b.BootstrapChecks    ] [PWm-Blt] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]</span><br></pre></td></tr></table></figure>
+<p>解决办法：<br>vim /etc/sysctl.conf<br><code>vm.max_map_count=655360</code><br>修改完成执行命令：<br>sysctl -p<br>cd elasticsearch-6.1.4/bin<br>这里不能使用root用户运行elastic，可以自己新建一个普通用户，还要把目录授予普通用户权限<br>./elasticsearch<br>然后我们可以打开浏览器输入192.168.179.133:9200可以查看es的状态，或者可以装一个head插件</p>
+<h3 id="安装head插件"><a href="#安装head插件" class="headerlink" title="安装head插件"></a>安装head插件</h3><h4 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h4><p>这里我采用的源码安装，其实二进制安装是比较简单的，但我执行到最后node的二进制文件无法执行，因此只能源码安装，时间有点长，打了两局王者荣耀才装完<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum groupinstall <span class="string">"Development Tools"</span>    <span class="comment">#安装编译必要的工具</span></span><br><span class="line">wget https://nodejs.org/dist/v8.11.4/node-v8.11.4.tar.gz  <span class="comment">#下载node的源码包</span></span><br><span class="line">tar -zxvf node-v8.11.4.tar.gz             <span class="comment">#解压源码包</span></span><br><span class="line"><span class="built_in">cd</span> node-v8.11.4</span><br><span class="line">./configure &amp;&amp; make &amp;&amp; make install             <span class="comment">#执行编译安装</span></span><br><span class="line"><span class="built_in">echo</span> $?    <span class="comment">#查看执行结果，输出0表示安装成功</span></span><br></pre></td></tr></table></figure></p>
+<p>node.js默认安装路径在/usr/local/bin/目录下</p>
+<h4 id="安装grunt"><a href="#安装grunt" class="headerlink" title="安装grunt"></a>安装grunt</h4><p>grunt是基于Node.js的项目构建工具，可以进行打包压缩、测试、执行等等的工作，head插件就是通过grunt启动<br><code>npm install -g grunt-cli</code></p>
+<h4 id="下载并安装head插件"><a href="#下载并安装head插件" class="headerlink" title="下载并安装head插件"></a>下载并安装head插件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/mobz/elasticsearch-head.git       <span class="comment">#克隆head插件仓库</span></span><br><span class="line"><span class="built_in">cd</span> elasticsearch-head/</span><br><span class="line">npm install          <span class="comment">#执行完会报一些错误，不要管执行下一条命令就会解决</span></span><br><span class="line">npm install phantomjs-prebuilt@2.1.14 --ignore-scripts</span><br></pre></td></tr></table></figure>
+<h4 id="修改elasticsearch的配置"><a href="#修改elasticsearch的配置" class="headerlink" title="修改elasticsearch的配置"></a>修改elasticsearch的配置</h4><p>vim /elasticsearch/elasticsearch-6.4.0/config/elasticsearch.yml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http.cors.enabled: true                                    # elasticsearch中启用CORS</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;                                 # 允许访问的IP地址段，* 为所有IP都可以访问</span><br></pre></td></tr></table></figure></p>
+<h4 id="启用head插件并在浏览器上打开"><a href="#启用head插件并在浏览器上打开" class="headerlink" title="启用head插件并在浏览器上打开"></a>启用head插件并在浏览器上打开</h4><p>npm run start    #启动head插件<br>在浏览器输入<a href="http://192.168.179.133:9100/" target="_blank" rel="noopener">http://192.168.179.133:9100/</a> 即可使用head插件</p>
+<h3 id="使用es存储zabbix的历史数据"><a href="#使用es存储zabbix的历史数据" class="headerlink" title="使用es存储zabbix的历史数据"></a>使用es存储zabbix的历史数据</h3><h4 id="修改-etc-zabbix-zabbix-server-conf"><a href="#修改-etc-zabbix-zabbix-server-conf" class="headerlink" title="修改/etc/zabbix/zabbix_server.conf"></a>修改/etc/zabbix/zabbix_server.conf</h4><p>添加如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HistoryStorageURL=192.168.179.133:9200</span><br><span class="line">HistoryStorageTypes=str,text,log,uint,dbl</span><br><span class="line">HistoryStorageDateIndex=1</span><br></pre></td></tr></table></figure></p>
+<h4 id="修改-etc-zabbix-web-zabbix-conf-php"><a href="#修改-etc-zabbix-web-zabbix-conf-php" class="headerlink" title="修改/etc/zabbix/web/zabbix.conf.php"></a>修改/etc/zabbix/web/zabbix.conf.php</h4><p>添加如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">global $DB, $HISTORY;</span><br><span class="line">$HISTORY[&apos;url&apos;]   = &apos;http://192.168.179.133:9200&apos;;</span><br><span class="line">// Value types stored in Elasticsearch.</span><br><span class="line">$HISTORY[&apos;types&apos;] = [&apos;str&apos;, &apos;text&apos;, &apos;log&apos;,&apos;uint&apos;,&apos;dbl&apos;];</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://i2.51cto.com/images/blog/201812/22/7e12d7a1ded4d024ef1a111001b2be1c.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="修改完成后重启zabbix-并查看zabbix是否有数据"><a href="#修改完成后重启zabbix-并查看zabbix是否有数据" class="headerlink" title="修改完成后重启zabbix,并查看zabbix是否有数据"></a>修改完成后重启zabbix,并查看zabbix是否有数据</h4><p><code>systemctl restart zabbix-server</code><br><img src="http://i2.51cto.com/images/blog/201812/22/f9f2abb28c4bd2b1fa464e802bf7b7ab.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br>至此，es收集zabbix历史数据完成</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+        
+      </div>
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="wanger wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="wanger 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="wanger 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/zabbix/" rel="tag"># zabbix</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/20/Python的语句与语法/" rel="next" title="python的语句与语法">
+                <i class="fa fa-chevron-left"></i> python的语句与语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODcxMi8xNTI0MA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="wanger" />
+            
+              <p class="site-author-name" itemprop="name">wanger</p>
+              <p class="site-description motion-element" itemprop="description">记录生活的点滴，Linux运维学习笔记</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/zhouhua-amei" title="github" target="_blank">github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.hacka.cc" title="逍遥‘blog" target="_blank">逍遥‘blog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装zabbix-server"><span class="nav-number">1.</span> <span class="nav-text">安装zabbix-server</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加zabbix存储库"><span class="nav-number">1.1.</span> <span class="nav-text">添加zabbix存储库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装zabbix-server-zabbix-web"><span class="nav-number">1.2.</span> <span class="nav-text">安装zabbix-server  zabbix-web</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装MySQL5-7数据库"><span class="nav-number">2.</span> <span class="nav-text">安装MySQL5.7数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#卸载mariadb包"><span class="nav-number">2.1.</span> <span class="nav-text">卸载mariadb包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载并解压MySQL源码包"><span class="nav-number">2.2.</span> <span class="nav-text">下载并解压MySQL源码包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建MySQL用户并对MySQL文件进行授权"><span class="nav-number">2.3.</span> <span class="nav-text">创建MySQL用户并对MySQL文件进行授权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建MySQL配置文件"><span class="nav-number">2.4.</span> <span class="nav-text">创建MySQL配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化数据库"><span class="nav-number">2.5.</span> <span class="nav-text">初始化数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看初始化密码"><span class="nav-number">2.6.</span> <span class="nav-text">查看初始化密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行如下操作开启MySQL服务，并设置相应权限"><span class="nav-number">2.7.</span> <span class="nav-text">执行如下操作开启MySQL服务，并设置相应权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改MySQL密码"><span class="nav-number">2.8.</span> <span class="nav-text">修改MySQL密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将MySQL加入环境变量"><span class="nav-number">2.9.</span> <span class="nav-text">将MySQL加入环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入数据库并创建zabbix数据库以及创建授权用户"><span class="nav-number">2.10.</span> <span class="nav-text">进入数据库并创建zabbix数据库以及创建授权用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编辑zabbix-server配置文件"><span class="nav-number">2.11.</span> <span class="nav-text">编辑zabbix-server配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将初始数据导入MySQL中"><span class="nav-number">2.12.</span> <span class="nav-text">将初始数据导入MySQL中</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Nginx"><span class="nav-number">3.</span> <span class="nav-text">安装Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关掉防火墙和selinux"><span class="nav-number">3.1.</span> <span class="nav-text">关掉防火墙和selinux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装依赖"><span class="nav-number">3.2.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Nginx的yum仓库"><span class="nav-number">3.3.</span> <span class="nav-text">配置Nginx的yum仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动Nginx"><span class="nav-number">3.4.</span> <span class="nav-text">启动Nginx</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装PHP"><span class="nav-number">4.</span> <span class="nav-text">安装PHP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加PHP用户"><span class="nav-number">4.1.</span> <span class="nav-text">添加PHP用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装PHP依赖库"><span class="nav-number">4.2.</span> <span class="nav-text">安装PHP依赖库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译安装php"><span class="nav-number">4.3.</span> <span class="nav-text">编译安装php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更改PHP配置文件"><span class="nav-number">4.4.</span> <span class="nav-text">更改PHP配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动php-fpm"><span class="nav-number">4.5.</span> <span class="nav-text">启动php-fpm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装zabbix-agent"><span class="nav-number">5.</span> <span class="nav-text">安装zabbix-agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装zabbix-web"><span class="nav-number">6.</span> <span class="nav-text">安装zabbix-web</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将zabbix的php源文件拷贝到网站目录上"><span class="nav-number">6.1.</span> <span class="nav-text">将zabbix的php源文件拷贝到网站目录上</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改nginx配置"><span class="nav-number">6.2.</span> <span class="nav-text">修改nginx配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问192-168-179-132-index-php安装zabbix-web"><span class="nav-number">6.3.</span> <span class="nav-text">访问192.168.179.132/index.php安装zabbix-web</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控zabbix-本机的CPU-idle"><span class="nav-number">7.</span> <span class="nav-text">监控zabbix 本机的CPU idle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自建模板监控磁盘IO"><span class="nav-number">8.</span> <span class="nav-text">自建模板监控磁盘IO</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首先zabbix-agent端要开启允许脚本收集监控数据"><span class="nav-number">8.1.</span> <span class="nav-text">首先zabbix-agent端要开启允许脚本收集监控数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写收集脚本"><span class="nav-number">8.2.</span> <span class="nav-text">编写收集脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打开zabbix-web，创建模板"><span class="nav-number">8.3.</span> <span class="nav-text">打开zabbix-web，创建模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建应用集"><span class="nav-number">8.4.</span> <span class="nav-text">创建应用集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建监控项"><span class="nav-number">8.5.</span> <span class="nav-text">创建监控项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建图形"><span class="nav-number">8.6.</span> <span class="nav-text">创建图形</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为需要监控的主机链接模板"><span class="nav-number">8.7.</span> <span class="nav-text">为需要监控的主机链接模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决图形名字乱码问题"><span class="nav-number">8.8.</span> <span class="nav-text">解决图形名字乱码问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装elastic6-1"><span class="nav-number">9.</span> <span class="nav-text">安装elastic6.1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载源码包并解压，修改es配置"><span class="nav-number">9.1.</span> <span class="nav-text">下载源码包并解压，修改es配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装head插件"><span class="nav-number">10.</span> <span class="nav-text">安装head插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装node-js"><span class="nav-number">10.1.</span> <span class="nav-text">安装node.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装grunt"><span class="nav-number">10.2.</span> <span class="nav-text">安装grunt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载并安装head插件"><span class="nav-number">10.3.</span> <span class="nav-text">下载并安装head插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改elasticsearch的配置"><span class="nav-number">10.4.</span> <span class="nav-text">修改elasticsearch的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启用head插件并在浏览器上打开"><span class="nav-number">10.5.</span> <span class="nav-text">启用head插件并在浏览器上打开</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用es存储zabbix的历史数据"><span class="nav-number">11.</span> <span class="nav-text">使用es存储zabbix的历史数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-etc-zabbix-zabbix-server-conf"><span class="nav-number">11.1.</span> <span class="nav-text">修改/etc/zabbix/zabbix_server.conf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-etc-zabbix-web-zabbix-conf-php"><span class="nav-number">11.2.</span> <span class="nav-text">修改/etc/zabbix/web/zabbix.conf.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改完成后重启zabbix-并查看zabbix是否有数据"><span class="nav-number">11.3.</span> <span class="nav-text">修改完成后重启zabbix,并查看zabbix是否有数据</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanger</span>
+
+  
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共21.4k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+      <div>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b6abf55d4d0ed75" async = "async" ></script>
+</div>
+
+      </div>
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
