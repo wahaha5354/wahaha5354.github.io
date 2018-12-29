@@ -110,18 +110,37 @@
 
 
 
-  <meta name="description" content="关于条件测试命令可以使用man test命令查看  条件测试语句语法1.test 测试语句2.[ 测试语句 ]3.[[ 测试语句 ]]4.((测试语句))其中1和2除了语法不一样，功能基本是一样的，而第3种语法他可以使用通配符进行匹配，第四种语法除了用于整数的比较，更多的还是进行一些整数的运算，不过平时经常用到的还是第2、3种语法结构。 条件测试类型 文件测试 数值测试 字符串测试 逻辑测试文件">
-<meta name="keywords" content="shell">
+  <meta name="description" content="安装并配置mailx安装mailxyum install -y mailx 修改mailx配置文件vim vim /etc/mail.rc12345set from=wang210@163.com  #定义发件人set smtp=smtp.163.com  #定义smtp服务器set smtp-auth-user=wang210@163.com set smtp-auth-password=asd">
+<meta name="keywords" content="zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell编程之条件测试">
-<meta property="og:url" content="https://wahaha5354.github.io/2018/08/18/shell编程之条件测试/index.html">
+<meta property="og:title" content="zabbix配置微信和邮件报警">
+<meta property="og:url" content="https://wahaha5354.github.io/2018/12/29/zabbix配置微信和邮件报警/index.html">
 <meta property="og:site_name" content="WangEr&#39;s Blog">
-<meta property="og:description" content="关于条件测试命令可以使用man test命令查看  条件测试语句语法1.test 测试语句2.[ 测试语句 ]3.[[ 测试语句 ]]4.((测试语句))其中1和2除了语法不一样，功能基本是一样的，而第3种语法他可以使用通配符进行匹配，第四种语法除了用于整数的比较，更多的还是进行一些整数的运算，不过平时经常用到的还是第2、3种语法结构。 条件测试类型 文件测试 数值测试 字符串测试 逻辑测试文件">
+<meta property="og:description" content="安装并配置mailx安装mailxyum install -y mailx 修改mailx配置文件vim vim /etc/mail.rc12345set from=wang210@163.com  #定义发件人set smtp=smtp.163.com  #定义smtp服务器set smtp-auth-user=wang210@163.com set smtp-auth-password=asd">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-18T02:04:57.436Z">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/4b30209d2fd8e34fddbede58eb5d0e59.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/0dd2ee62175b57174231f0243ce868df.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/6dfce1ea7e91282c2af003f9240ff0e3.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/d89d480b672450d5266347f765884b65.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/8014d73a490f194019802c26c0291111.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/bd22df3fccc6b83f94d0b0068dcab6ba.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/3fe7d7252ec3ed0619515cccea210c51.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/66f5765e3a51d384d19f892129900e38.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/7b610b3290faf31421b7f75f7a4c572b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/b6599f09a564f242de833497f2b8d930.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/3ff5841c77954523003a60bd00a65de8.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/9762e8c984e502cc155f5a0fa6e4500b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/133026e0013bd3ff66cb257c40ac4a4b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/9be9b96ea260b5481765943ce41aee93.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/c428cbc26995e56fe763d76be730f51f.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/75504adfad809b4fbdb3e99fa63e157c.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/7e18c7cc7a52fccf8974d470cbc24129.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:image" content="http://i2.51cto.com/images/blog/201812/26/7682e523da05b253535a4df4d54be955.jpg?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
+<meta property="og:updated_time" content="2018-12-29T03:45:36.375Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell编程之条件测试">
-<meta name="twitter:description" content="关于条件测试命令可以使用man test命令查看  条件测试语句语法1.test 测试语句2.[ 测试语句 ]3.[[ 测试语句 ]]4.((测试语句))其中1和2除了语法不一样，功能基本是一样的，而第3种语法他可以使用通配符进行匹配，第四种语法除了用于整数的比较，更多的还是进行一些整数的运算，不过平时经常用到的还是第2、3种语法结构。 条件测试类型 文件测试 数值测试 字符串测试 逻辑测试文件">
+<meta name="twitter:title" content="zabbix配置微信和邮件报警">
+<meta name="twitter:description" content="安装并配置mailx安装mailxyum install -y mailx 修改mailx配置文件vim vim /etc/mail.rc12345set from=wang210@163.com  #定义发件人set smtp=smtp.163.com  #定义smtp服务器set smtp-auth-user=wang210@163.com set smtp-auth-password=asd">
+<meta name="twitter:image" content="http://i2.51cto.com/images/blog/201812/26/4b30209d2fd8e34fddbede58eb5d0e59.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
 
 
 
@@ -130,7 +149,7 @@
 
 
 
-  <link rel="canonical" href="https://wahaha5354.github.io/2018/08/18/shell编程之条件测试/"/>
+  <link rel="canonical" href="https://wahaha5354.github.io/2018/12/29/zabbix配置微信和邮件报警/"/>
 
 
 
@@ -140,7 +159,7 @@
   };
 </script>
 
-  <title>shell编程之条件测试 | WangEr's Blog</title>
+  <title>zabbix配置微信和邮件报警 | WangEr's Blog</title>
   
 
 
@@ -352,7 +371,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wahaha5354.github.io/2018/08/18/shell编程之条件测试/">
+    <link itemprop="mainEntityOfPage" href="https://wahaha5354.github.io/2018/12/29/zabbix配置微信和邮件报警/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wanger">
@@ -369,7 +388,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">shell编程之条件测试
+          <h1 class="post-title" itemprop="name headline">zabbix配置微信和邮件报警
               
             
           </h1>
@@ -394,7 +413,7 @@
                 
               
 
-              <time title="创建时间：2018-08-18 09:55:05 / 修改时间：10:04:57" itemprop="dateCreated datePublished" datetime="2018-08-18T09:55:05+08:00">2018-08-18</time>
+              <time title="创建时间：2018-12-29 11:44:51 / 修改时间：11:45:36" itemprop="dateCreated datePublished" datetime="2018-12-29T11:44:51+08:00">2018-12-29</time>
             
 
             
@@ -404,6 +423,24 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/zabbix/" itemprop="url" rel="index"><span itemprop="name">zabbix</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -432,33 +469,42 @@
       
 
       
-        <blockquote>
-<p>关于条件测试命令可以使用man test命令查看</p>
-</blockquote>
-<h2 id="条件测试语句语法"><a href="#条件测试语句语法" class="headerlink" title="条件测试语句语法"></a>条件测试语句语法</h2><p>1.test 测试语句<br>2.[ 测试语句 ]<br>3.[[ 测试语句 ]]<br>4.((测试语句))<br>其中1和2除了语法不一样，功能基本是一样的，而第3种语法他可以使用通配符进行匹配，第四种语法除了用于整数的比较，更多的还是进行一些整数的运算，不过平时经常用到的还是第2、3种语法结构。</p>
-<h2 id="条件测试类型"><a href="#条件测试类型" class="headerlink" title="条件测试类型"></a>条件测试类型</h2><ol>
-<li>文件测试</li>
-<li>数值测试</li>
-<li>字符串测试</li>
-<li>逻辑测试<h2 id="文件测试"><a href="#文件测试" class="headerlink" title="文件测试"></a>文件测试</h2><h3 id="格式："><a href="#格式：" class="headerlink" title="格式："></a>格式：</h3>1.test 文件测试符 file<br>2.[ 文件测试符 file ]   #中括号的两边都需要有空格<br>3.[[ 文件测试符 file ]]  #中括号两边需要有空格<h3 id="常用文件测试操作符："><a href="#常用文件测试操作符：" class="headerlink" title="常用文件测试操作符："></a>常用文件测试操作符：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-b: 文件是否存在，并且为块文件</span><br><span class="line">-c：文件是否存在，并且为字符文件</span><br><span class="line">-d: 文件是否存在，并且为一个目录（在linux下,万物皆为文件）</span><br><span class="line">-e: 文件是否存在</span><br><span class="line">-f: 文件是否存在，并且为普通文件</span><br><span class="line">-s: 文件是否存在，并且文件大小大于零</span><br><span class="line">-L: 文件是否存在，并且为链接文件</span><br><span class="line">-r: 文件是否存在，并且文件可读</span><br><span class="line">-w: 文件是否存在，并且文件可写</span><br><span class="line">-x: 文件是否存在，并且文件可执行</span><br><span class="line">file1 -nt file2 文件1是否比文件2新(文件新旧是按照文件修改时间来区分的)</span><br><span class="line">file1 -ot file2 文件1是否比文件2旧</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="实例："><a href="#实例：" class="headerlink" title="实例："></a>实例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@docker ~]# touch wanger          #新建一个普通文件</span><br><span class="line">[root@docker ~]# test -f wanger &amp;&amp; echo 0 || echo 1</span><br><span class="line">0      #测试文件是否是普通文件，如果是输出0，否则输出1</span><br><span class="line">[root@docker ~]# [ -d wanger ] &amp;&amp; echo 0 || echo 1</span><br><span class="line">1      #测试文件是否是一个目录，如果是输出0，否则输出1</span><br><span class="line"></span><br><span class="line">[root@docker ~]# touch wangerxiao    创建一个普通文件wangerxiao</span><br><span class="line">[root@docker ~]# test wanger -nt wangerxiao &amp;&amp; echo 0 || echo 1</span><br><span class="line">1     #比较wanger是否比wangerxiao新，如果为真输出0，否则输出1</span><br><span class="line">[root@docker ~]# [ wanger -ot wangerxiao ] &amp;&amp; echo 0 || echo 1</span><br><span class="line">0     #比较wanger是否比wangerxiao旧，如果为真输出0，否则输出1</span><br></pre></td></tr></table></figure>
-<h2 id="字符串测试："><a href="#字符串测试：" class="headerlink" title="字符串测试："></a>字符串测试：</h2><h3 id="格式：-1"><a href="#格式：-1" class="headerlink" title="格式："></a>格式：</h3><ol>
-<li>test 字符串测试符 string</li>
-<li>[ 字符串测试符 string ]</li>
-<li>[[ 字符串测试符 string ]]<h3 id="常用字符串测试操作符："><a href="#常用字符串测试操作符：" class="headerlink" title="常用字符串测试操作符："></a>常用字符串测试操作符：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-z string :字符串长度是否为0</span><br><span class="line">-n string :字符串长度是否不为0</span><br><span class="line">string1 = string2 :string1和string2是否相等</span><br><span class="line">string1 != string2 :string1和string2是否不相等</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="实例：-1"><a href="#实例：-1" class="headerlink" title="实例："></a>实例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@docker ~]# name=wanger       #定义一个变量</span><br><span class="line">[root@docker ~]# [ -z $name ] &amp;&amp; echo 0 || echo 1</span><br><span class="line">1           #判断字符串是否为空，为空则返回0，否则返回1</span><br><span class="line">[root@docker ~]# test -n $name &amp;&amp; echo 0 || echo 1</span><br><span class="line">0	#判断字符串是否不为空，如果是则返回0，否则返回1</span><br><span class="line">[root@docker ~]# [ $name != &quot;wanger&quot; ] &amp;&amp; echo 0 || echo 1</span><br><span class="line">1           #判断变量是否不等于”wanger”，如果是返回0,否则返回1</span><br><span class="line">[root@docker ~]# test $name = &quot;wanger&quot; &amp;&amp; echo 0 || echo 1</span><br><span class="line">0	#判断变量是否等于”wanger”,如果是返回0，否则返回1</span><br></pre></td></tr></table></figure>
-<h2 id="数值测试："><a href="#数值测试：" class="headerlink" title="数值测试："></a>数值测试：</h2><h3 id="格式：-2"><a href="#格式：-2" class="headerlink" title="格式："></a>格式：</h3><p>test num1 数值测试操作符 num2<br>[ num1 数值测试操作符 num2 ]<br>[[ num 数值测试操作符 num2 ]]<br>((num1数值测试操作符num2))</p>
-<h3 id="常用数值测试操作符："><a href="#常用数值测试操作符：" class="headerlink" title="常用数值测试操作符："></a>常用数值测试操作符：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">num1 -eq num2 : 数字1是否等于数字2</span><br><span class="line">num1 -ge num2 : 数字1是否大于等于数字2</span><br><span class="line">num1 -gt num2 : 数字1是否大于数字2</span><br><span class="line">num1 -le num2 : 数字1是否小于等于数字2</span><br><span class="line">num1 -lt num2 : 数字1是否小于数字2</span><br><span class="line">num1 -ne num2 : 数字1是否不等于数字2</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意：以上几种操作符不能用在(())格式中，在(())中应使用”&lt; &gt; = != &gt;= &lt;=”比较符号来进行数值的比较</p>
-</blockquote>
-<h3 id="实例：-2"><a href="#实例：-2" class="headerlink" title="实例："></a>实例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@docker ~]# test 6 -le 5 &amp;&amp; echo 0 ||echo 1</span><br><span class="line">0        #判断6是否小于等于5，如果是返回0，否则返回1</span><br><span class="line">[2]+  Done                    test 64 -gt 63</span><br><span class="line">[root@docker ~]# [ 6 -gt 5 ]&amp;&amp; echo 0 || echo 1</span><br><span class="line">0       #判断6是否大于5，如果大于返回0，否则返回1</span><br><span class="line">[root@docker ~]# [[ 6 = 5 ]]&amp;&amp; echo 0 || echo 1</span><br><span class="line">1	#判断6是否等于5，如果等于返回0，否则返回1</span><br><span class="line">[root@docker ~]# ((5!=6))&amp;&amp;echo 0 ||echo 1</span><br><span class="line">0	#判断5是否等于6，如果不等于返回0，等于则返回1</span><br></pre></td></tr></table></figure>
-<h2 id="逻辑运算符："><a href="#逻辑运算符：" class="headerlink" title="逻辑运算符："></a>逻辑运算符：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-a : 相当于&amp;&amp;，表示逻辑与，两端条件都为真，结果为真</span><br><span class="line">-o : 相当于||,表示逻辑或，两端条件只要有一个为真，结果就为真</span><br><span class="line">！: 逻辑非，两端相反结果为真</span><br></pre></td></tr></table></figure>
-<h3 id="实例：-3"><a href="#实例：-3" class="headerlink" title="实例："></a>实例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">test=”123”  #定义test变量</span><br><span class="line">[root@docker ~]# [ ! -z $test -o $test = &quot;123&quot; ] &amp;&amp;echo 0 || echo 1</span><br><span class="line">0     #判断test变量是否不为空或者是否等于123，如果是返回0，在[]格式中只能使用-o和-a，而不能用&amp;&amp;和||</span><br><span class="line">[root@docker ~]# test -z $test &amp;&amp; test $test = &quot;123&quot; &amp;&amp;echo 0 ||echo 1</span><br><span class="line">1        #判断test变量是否为空并且test变量是否等于123，如果是返回0</span><br><span class="line">[root@docker ~]# [[ -z $test || $test = &quot;123&quot; ]] &amp;&amp;echo 0 ||echo 1</span><br><span class="line">0        #判断test变量是否为空或者test变量是否等于123，如果是返回0</span><br></pre></td></tr></table></figure>
+        <h3 id="安装并配置mailx"><a href="#安装并配置mailx" class="headerlink" title="安装并配置mailx"></a>安装并配置mailx</h3><h4 id="安装mailx"><a href="#安装mailx" class="headerlink" title="安装mailx"></a>安装mailx</h4><p><code>yum install -y mailx</code></p>
+<h4 id="修改mailx配置文件"><a href="#修改mailx配置文件" class="headerlink" title="修改mailx配置文件"></a>修改mailx配置文件</h4><p><code>vim vim /etc/mail.rc</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set from=wang210@163.com  #定义发件人</span><br><span class="line">set smtp=smtp.163.com  #定义smtp服务器</span><br><span class="line">set smtp-auth-user=wang210@163.com </span><br><span class="line">set smtp-auth-password=asdASD123</span><br><span class="line">set smtp-auth=login</span><br></pre></td></tr></table></figure></p>
+<h4 id="发送测试邮件"><a href="#发送测试邮件" class="headerlink" title="发送测试邮件"></a>发送测试邮件</h4><p><code>echo &#39;test1&#39;|mail -s &quot;testmail&quot; wang210@126.com</code></p>
+<h4 id="编写邮件告警脚本"><a href="#编写邮件告警脚本" class="headerlink" title="编写邮件告警脚本"></a>编写邮件告警脚本</h4><p><code>vim /usr/lib/zabbix/alertscripts/mail.sh</code><br>这是zabbix默认的脚本路径，可以通过zabbix_server配置文件修改<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/bin/bash</span></span><br><span class="line">to=<span class="variable">$1</span></span><br><span class="line">subject=`<span class="built_in">echo</span> <span class="variable">$2</span>|tr <span class="string">'\r\n'</span> <span class="string">'\n'</span>`</span><br><span class="line">message=`<span class="built_in">echo</span> <span class="variable">$3</span>|tr <span class="string">'\r\n'</span> <span class="string">'\n'</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$message</span>"</span>|mail -s <span class="string">"<span class="variable">$subject</span>"</span> <span class="variable">$to</span> &gt;&gt;/var/<span class="built_in">log</span>/mailx.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure></p>
+<p>touch /var/log/mailx.log<br>chown -R zabbix.zabbix /var/log/mailx.log<br>chmod +x /usr/lib/zabbix/alertscripts/mail.sh<br>./mail.sh <a href="mailto:wang210@126.com" target="_blank" rel="noopener">wang210@126.com</a> “主题” “内容”</p>
+<h4 id="编辑zabbix-web，配置报警媒介"><a href="#编辑zabbix-web，配置报警媒介" class="headerlink" title="编辑zabbix_web，配置报警媒介"></a>编辑zabbix_web，配置报警媒介</h4><p><img src="http://i2.51cto.com/images/blog/201812/26/4b30209d2fd8e34fddbede58eb5d0e59.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br>脚本参数的变量全为大写，是zabbix内置的宏<br>更多关于zabbix的宏可以查看 <a href="https://www.zabbix.com/documentation/4.0/manual/appendix/macros/supported_by_location" target="_blank" rel="noopener">官方文档宏的介绍</a><br>除了使用脚本媒介，也可以使用email作为媒介，相比之下，使用email更简单<br><img src="http://i2.51cto.com/images/blog/201812/26/0dd2ee62175b57174231f0243ce868df.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="编辑zabbix-web-配置用户"><a href="#编辑zabbix-web-配置用户" class="headerlink" title="编辑zabbix_web,配置用户"></a>编辑zabbix_web,配置用户</h4><p><img src="http://i2.51cto.com/images/blog/201812/26/6dfce1ea7e91282c2af003f9240ff0e3.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<p><img src="http://i2.51cto.com/images/blog/201812/26/d89d480b672450d5266347f765884b65.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="配置报警动作"><a href="#配置报警动作" class="headerlink" title="配置报警动作"></a>配置报警动作</h4><p>操作，恢复操作，或者更新操作必须存在一个</p>
+<h5 id="配置条件"><a href="#配置条件" class="headerlink" title="配置条件"></a>配置条件</h5><p>可以根据自己的需要配置触发条件<br><img src="http://i2.51cto.com/images/blog/201812/26/8014d73a490f194019802c26c0291111.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h5 id="配置操作"><a href="#配置操作" class="headerlink" title="配置操作"></a>配置操作</h5><p>默认标题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;TRIGGER.STATUS&#125;:&#123;TRIGGER.NAME&#125;</span><br></pre></td></tr></table></figure>
+<p>消息内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">报警主机：&#123;HOST.NAME&#125;</span><br><span class="line">报警IP：&#123;HOST.IP&#125;</span><br><span class="line">报警时间：&#123;EVENT.DATE&#125;-&#123;EVENT.TIME&#125;</span><br><span class="line">报警等级：&#123;TRIGGER.SEVERITY&#125;</span><br><span class="line">报警信息：&#123;TRIGGER.NAME&#125;：&#123;ITEM.VALUE&#125;</span><br><span class="line">事件ID：&#123;EVENT.ID&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://i2.51cto.com/images/blog/201812/26/bd22df3fccc6b83f94d0b0068dcab6ba.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h5 id="配置恢复操作"><a href="#配置恢复操作" class="headerlink" title="配置恢复操作"></a>配置恢复操作</h5><p>默认标题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;TRIGGER.STATUS&#125;:&#123;TRIGGER.NAME&#125;</span><br></pre></td></tr></table></figure>
+<p>消息内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">恢复主机：&#123;HOST.NAME&#125;</span><br><span class="line">恢复IP：&#123;HOST.IP&#125;</span><br><span class="line">恢复时间：&#123;EVENT.DATE&#125;-&#123;EVENT.TIME&#125;</span><br><span class="line">恢复等级：&#123;TRIGGER.SEVERITY&#125;</span><br><span class="line">恢复信息：&#123;TRIGGER.NAME&#125;:&#123;ITEM.VALUE&#125;</span><br><span class="line">恢复ID：&#123;EVENT.ID&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://i2.51cto.com/images/blog/201812/26/3fe7d7252ec3ed0619515cccea210c51.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="关闭agent，测试报警"><a href="#关闭agent，测试报警" class="headerlink" title="关闭agent，测试报警"></a>关闭agent，测试报警</h4><p><code>systemctl stop zabbix_agent</code><br><img src="http://i2.51cto.com/images/blog/201812/26/66f5765e3a51d384d19f892129900e38.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br><code>systemctl start zabbix_agent</code><br><img src="http://i2.51cto.com/images/blog/201812/26/7b610b3290faf31421b7f75f7a4c572b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h3 id="配置微信报警"><a href="#配置微信报警" class="headerlink" title="配置微信报警"></a>配置微信报警</h3><h4 id="注册企业微信"><a href="#注册企业微信" class="headerlink" title="注册企业微信"></a>注册企业微信</h4><p>配置微信报警需要注册<a href="https://work.weixin.qq.com/wework_admin/frame" target="_blank" rel="noopener">企业微信</a></p>
+<h4 id="获取企业ID"><a href="#获取企业ID" class="headerlink" title="获取企业ID"></a>获取企业ID</h4><p>点击‘我的企业’到最下面获取<br><img src="http://i2.51cto.com/images/blog/201812/26/b6599f09a564f242de833497f2b8d930.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="获取AgentID和Secret"><a href="#获取AgentID和Secret" class="headerlink" title="获取AgentID和Secret"></a>获取AgentID和Secret</h4><p>单击应用与小程序，选择下面的创建应用，应用名字自己随便起，最好有象征意义<br><img src="http://i2.51cto.com/images/blog/201812/26/3ff5841c77954523003a60bd00a65de8.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<p><img src="http://i2.51cto.com/images/blog/201812/26/9762e8c984e502cc155f5a0fa6e4500b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""><br>然后打开新创建的应用，记录下AgentID和Secret</p>
+<h3 id="配置脚本"><a href="#配置脚本" class="headerlink" title="配置脚本"></a>配置脚本</h3><h4 id="从GitHub克隆微信报警脚本"><a href="#从GitHub克隆微信报警脚本" class="headerlink" title="从GitHub克隆微信报警脚本"></a>从GitHub克隆微信报警脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/X-Mars/Zabbix-Alert-WeChat.git</span><br><span class="line">cp Zabbix-Alert-WeChat/wechat.py /usr/<span class="built_in">local</span>/zabbix34/alertscripts/</span><br><span class="line">chmod +x wechat.py &amp;&amp; chown zabbix:zabbix wechat.py</span><br></pre></td></tr></table></figure>
+<h4 id="安装requests库"><a href="#安装requests库" class="headerlink" title="安装requests库"></a>安装requests库</h4><p>使用pip安装，需要先下载pip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python  get-pip.py</span><br></pre></td></tr></table></figure></p>
+<p>安装requests库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install requests</span><br></pre></td></tr></table></figure></p>
+<h4 id="修改wechat-py脚本"><a href="#修改wechat-py脚本" class="headerlink" title="修改wechat.py脚本"></a>修改wechat.py脚本</h4><p>Corpid，Secret，Agentid填写自己企业微信的信息，修改这三个参数即可，当然也可以选择使用标签ID，部门ID，取消注释即可<br><img src="http://i2.51cto.com/images/blog/201812/26/133026e0013bd3ff66cb257c40ac4a4b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<p>修改完成后测试脚本是否可用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python wechat.py 企业微信ID test text</span><br><span class="line">&#123;u&apos;invaliduser&apos;: u&apos;&apos;, u&apos;errcode&apos;: 0, u&apos;errmsg&apos;: u&apos;ok&apos;&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="在zabbix-web上配置报警媒介和用户"><a href="#在zabbix-web上配置报警媒介和用户" class="headerlink" title="在zabbix_web上配置报警媒介和用户"></a>在zabbix_web上配置报警媒介和用户</h3><h4 id="配置报警媒介"><a href="#配置报警媒介" class="headerlink" title="配置报警媒介"></a>配置报警媒介</h4><p><img src="http://i2.51cto.com/images/blog/201812/26/9be9b96ea260b5481765943ce41aee93.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="配置用户"><a href="#配置用户" class="headerlink" title="配置用户"></a>配置用户</h4><p>收件人填写企业微信的用户ID<br><img src="http://i2.51cto.com/images/blog/201812/26/c428cbc26995e56fe763d76be730f51f.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h3 id="配置动作"><a href="#配置动作" class="headerlink" title="配置动作"></a>配置动作</h3><h4 id="配置操作-1"><a href="#配置操作-1" class="headerlink" title="配置操作"></a>配置操作</h4><p>消息内容与标题与邮件报警配置相同，只要把发送的媒介通过WeChat发送即可<br><img src="http://i2.51cto.com/images/blog/201812/26/75504adfad809b4fbdb3e99fa63e157c.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h4 id="配置恢复操作-1"><a href="#配置恢复操作-1" class="headerlink" title="配置恢复操作"></a>配置恢复操作</h4><p>恢复操作也是把媒介改成通过WeChat发送<br><img src="http://i2.51cto.com/images/blog/201812/26/7e18c7cc7a52fccf8974d470cbc24129.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
+<h3 id="测试微信报警"><a href="#测试微信报警" class="headerlink" title="测试微信报警"></a>测试微信报警</h3><p>重启虚拟机测试,企业微信收到邮件</p>
+<p><img src="http://i2.51cto.com/images/blog/201812/26/7682e523da05b253535a4df4d54be955.jpg?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
 
       
     </div>
@@ -527,7 +573,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/shell/" rel="tag"># shell</a>
+            <a href="/tags/zabbix/" rel="tag"># zabbix</a>
           
         </div>
       
@@ -540,8 +586,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/18/shell编程循环脚本/" rel="next" title="shell编程循环脚本">
-                <i class="fa fa-chevron-left"></i> shell编程循环脚本
+              <a href="/2018/12/29/python基础之函数/" rel="next" title="python基础之函数">
+                <i class="fa fa-chevron-left"></i> python基础之函数
               </a>
             
           </div>
@@ -549,10 +595,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/13/centos系统7的ftp版本创建目录和匿名用户登录的测试/" rel="prev" title="centos系统7的ftp版本创建目录和匿名用户登录的测试">
-                centos系统7的ftp版本创建目录和匿名用户登录的测试 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -752,7 +794,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件测试语句语法"><span class="nav-number">1.</span> <span class="nav-text">条件测试语句语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件测试类型"><span class="nav-number">2.</span> <span class="nav-text">条件测试类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件测试"><span class="nav-number">3.</span> <span class="nav-text">文件测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式："><span class="nav-number">3.1.</span> <span class="nav-text">格式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用文件测试操作符："><span class="nav-number">3.2.</span> <span class="nav-text">常用文件测试操作符：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例："><span class="nav-number">3.3.</span> <span class="nav-text">实例：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串测试："><span class="nav-number">4.</span> <span class="nav-text">字符串测试：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式：-1"><span class="nav-number">4.1.</span> <span class="nav-text">格式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用字符串测试操作符："><span class="nav-number">4.2.</span> <span class="nav-text">常用字符串测试操作符：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例：-1"><span class="nav-number">4.3.</span> <span class="nav-text">实例：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数值测试："><span class="nav-number">5.</span> <span class="nav-text">数值测试：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式：-2"><span class="nav-number">5.1.</span> <span class="nav-text">格式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用数值测试操作符："><span class="nav-number">5.2.</span> <span class="nav-text">常用数值测试操作符：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例：-2"><span class="nav-number">5.3.</span> <span class="nav-text">实例：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑运算符："><span class="nav-number">6.</span> <span class="nav-text">逻辑运算符：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例：-3"><span class="nav-number">6.1.</span> <span class="nav-text">实例：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装并配置mailx"><span class="nav-number">1.</span> <span class="nav-text">安装并配置mailx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装mailx"><span class="nav-number">1.1.</span> <span class="nav-text">安装mailx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改mailx配置文件"><span class="nav-number">1.2.</span> <span class="nav-text">修改mailx配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发送测试邮件"><span class="nav-number">1.3.</span> <span class="nav-text">发送测试邮件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写邮件告警脚本"><span class="nav-number">1.4.</span> <span class="nav-text">编写邮件告警脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编辑zabbix-web，配置报警媒介"><span class="nav-number">1.5.</span> <span class="nav-text">编辑zabbix_web，配置报警媒介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编辑zabbix-web-配置用户"><span class="nav-number">1.6.</span> <span class="nav-text">编辑zabbix_web,配置用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置报警动作"><span class="nav-number">1.7.</span> <span class="nav-text">配置报警动作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置条件"><span class="nav-number">1.7.1.</span> <span class="nav-text">配置条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置操作"><span class="nav-number">1.7.2.</span> <span class="nav-text">配置操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置恢复操作"><span class="nav-number">1.7.3.</span> <span class="nav-text">配置恢复操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭agent，测试报警"><span class="nav-number">1.8.</span> <span class="nav-text">关闭agent，测试报警</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置微信报警"><span class="nav-number">2.</span> <span class="nav-text">配置微信报警</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注册企业微信"><span class="nav-number">2.1.</span> <span class="nav-text">注册企业微信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取企业ID"><span class="nav-number">2.2.</span> <span class="nav-text">获取企业ID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取AgentID和Secret"><span class="nav-number">2.3.</span> <span class="nav-text">获取AgentID和Secret</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置脚本"><span class="nav-number">3.</span> <span class="nav-text">配置脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从GitHub克隆微信报警脚本"><span class="nav-number">3.1.</span> <span class="nav-text">从GitHub克隆微信报警脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装requests库"><span class="nav-number">3.2.</span> <span class="nav-text">安装requests库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改wechat-py脚本"><span class="nav-number">3.3.</span> <span class="nav-text">修改wechat.py脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在zabbix-web上配置报警媒介和用户"><span class="nav-number">4.</span> <span class="nav-text">在zabbix_web上配置报警媒介和用户</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置报警媒介"><span class="nav-number">4.1.</span> <span class="nav-text">配置报警媒介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置用户"><span class="nav-number">4.2.</span> <span class="nav-text">配置用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置动作"><span class="nav-number">5.</span> <span class="nav-text">配置动作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置操作-1"><span class="nav-number">5.1.</span> <span class="nav-text">配置操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置恢复操作-1"><span class="nav-number">5.2.</span> <span class="nav-text">配置恢复操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试微信报警"><span class="nav-number">6.</span> <span class="nav-text">测试微信报警</span></a></li></ol></div>
             
 
           </div>
